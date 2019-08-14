@@ -152,14 +152,19 @@ public class formDoiMatKhau extends javax.swing.JFrame {
         else {
             QuanLyNguoiDung quanLyNguoiDung = new QuanLyNguoiDung();
             NguoiDung objND = quanLyNguoiDung.layThongTinNguoiDung(formCuaSoChinh.getUserID());
-            if (!matKhauCu.equals(objND.getMatKhau()))
+            
+            // Ma hoa mat khau
+            String matKhauCuMD5 = quanLyNguoiDung.maHoaMD5(matKhauCu);
+            String matKhauMoiMD5 = quanLyNguoiDung.maHoaMD5(matKhauMoi);
+            
+            if (!matKhauCuMD5.equals(objND.getMatKhau()))
             {
                 JOptionPane.showMessageDialog(rootPane, "Mat khau cu sai. Vui long nhap lai mat khau cu");
                 txtMatKhauCu.requestFocus();
                 return;
             }
             else {
-                ketQuaCapNhap = quanLyNguoiDung.doiMatKhau(formCuaSoChinh.getUserID(), matKhauMoi);
+                ketQuaCapNhap = quanLyNguoiDung.doiMatKhau(formCuaSoChinh.getUserID(), matKhauMoiMD5);
             }
         }
         

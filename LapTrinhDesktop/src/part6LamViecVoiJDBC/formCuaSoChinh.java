@@ -58,6 +58,7 @@ public class formCuaSoChinh extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuHeThong = new javax.swing.JMenu();
         jMenuItemNguoiDung = new javax.swing.JMenuItem();
+        jMenuItemDanhSachNguoiDung = new javax.swing.JMenuItem();
         jMenuItemThemNguoiDung = new javax.swing.JMenuItem();
         jMenuItemDoiMatKhau = new javax.swing.JMenuItem();
         jMenuItemDangXuat = new javax.swing.JMenuItem();
@@ -92,6 +93,10 @@ public class formCuaSoChinh extends javax.swing.JFrame {
             }
         });
         jMenuHeThong.add(jMenuItemNguoiDung);
+
+        jMenuItemDanhSachNguoiDung.setIcon(new javax.swing.ImageIcon(getClass().getResource("/part6LamViecVoiJDBC/Images/danhSachNguoiDung.png"))); // NOI18N
+        jMenuItemDanhSachNguoiDung.setText("Danh sach nguoi dung");
+        jMenuHeThong.add(jMenuItemDanhSachNguoiDung);
 
         jMenuItemThemNguoiDung.setIcon(new javax.swing.ImageIcon(getClass().getResource("/part6LamViecVoiJDBC/Images/themNguoiDung.png"))); // NOI18N
         jMenuItemThemNguoiDung.setText("Them nguoi dung");
@@ -339,6 +344,7 @@ public class formCuaSoChinh extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuHeThong;
     private javax.swing.JMenuItem jMenuItemChuyenKhoa;
     private javax.swing.JMenuItem jMenuItemDangXuat;
+    private javax.swing.JMenuItem jMenuItemDanhSachNguoiDung;
     private javax.swing.JMenuItem jMenuItemDoiMatKhau;
     private javax.swing.JMenuItem jMenuItemDong;
     private javax.swing.JMenuItem jMenuItemMonHoc;

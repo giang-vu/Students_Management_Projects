@@ -180,9 +180,9 @@ public class QuanLyNguoiDung {
             Statement command = connection.createStatement();
 
             // Khai bao cau lenh truy van
-            String strSQL = String.format("INSERT INTO nguoidung(TenDangNhap, MatKhau, HoTen, DienThoai, Email, DiaChi)"
-                    + "VALUES ('%s', '%s', '%s', '%s', '%s', '%s')",
-                    objND.getTenDangNhap(), objND.getMatKhau(), objND.getHoTen(), objND.getDienThoai(), objND.getEmail(), objND.getDiaChi());
+            String strSQL = String.format("INSERT INTO nguoidung(TenDangNhap, MatKhau, HoTen, DienThoai, Email, DiaChi, Quyen)"
+                    + "VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
+                    objND.getTenDangNhap(), objND.getMatKhau(), objND.getHoTen(), objND.getDienThoai(), objND.getEmail(), objND.getDiaChi(), objND.getQuyen());
 
             // Neu so dong thuc hien duoc > 0 thi tra ve True, nguoc lai tra ve False;
             return command.executeUpdate(strSQL) > 0;
@@ -222,7 +222,7 @@ public class QuanLyNguoiDung {
         return false;
     }
 
-    public static String maHoaMD5(String pass) {
+    public String maHoaMD5(String pass) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] passBytes = pass.getBytes();

@@ -191,9 +191,9 @@ public class formDangNhap extends javax.swing.JFrame {
             NguoiDung objND = quanLyNguoiDung.layThongTinNguoiDung(tenDangNhap);
 
             if (objND != null) {
+                // Ma hoa mat khau
                 String matKhauMD5 = quanLyNguoiDung.maHoaMD5(matKhau);
-                String matKhauBDMD5 = objND.getMatKhau();
-                if (matKhauMD5.equals(matKhauBDMD5)) {
+                if (matKhauMD5.equals(objND.getMatKhau())) {
                     this.setVisible(false);
                     formCuaSoChinh formCSC = new formCuaSoChinh();
                     // Luu thong tin vao cua so chinh

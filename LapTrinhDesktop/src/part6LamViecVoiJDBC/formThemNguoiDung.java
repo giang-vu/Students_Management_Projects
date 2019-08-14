@@ -5,7 +5,12 @@
  */
 package part6LamViecVoiJDBC;
 
+import java.awt.Component;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.plaf.basic.BasicComboBoxRenderer;
 
 /**
  *
@@ -103,8 +108,6 @@ public class formThemNguoiDung extends javax.swing.JFrame {
         lblKiemTra.setText("none");
 
         jLabel9.setText("Quyen:");
-
-        cmbQuyen.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "User", "Admin" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -213,16 +216,19 @@ public class formThemNguoiDung extends javax.swing.JFrame {
 
     public boolean kiemTraTenDangNhap() {
         String tenDangNhap = txtTenDangNhap.getText();
-
-        QuanLyNguoiDung quanLyNguoiDung = new QuanLyNguoiDung();
-        NguoiDung objND = quanLyNguoiDung.layThongTinNguoiDung(tenDangNhap);
-
-        if (objND != null) {
-            lblKiemTra.setText("That bai!");
+        if (tenDangNhap.isEmpty()) {
             return false;
         } else {
-            lblKiemTra.setText("OK!");
-            return true;
+            QuanLyNguoiDung quanLyNguoiDung = new QuanLyNguoiDung();
+            NguoiDung objND = quanLyNguoiDung.layThongTinNguoiDung(tenDangNhap);
+
+            if (objND != null) {
+                lblKiemTra.setText("That bai!");
+                return false;
+            } else {
+                lblKiemTra.setText("OK!");
+                return true;
+            }
         }
     }
 
@@ -248,6 +254,7 @@ public class formThemNguoiDung extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         lblKiemTra.setText("");
+        hienThiDanhSachQuyen();
     }//GEN-LAST:event_formWindowOpened
 
     private void btnCapNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhapActionPerformed
@@ -267,7 +274,7 @@ public class formThemNguoiDung extends javax.swing.JFrame {
                 String matKhauMD5 = "";
                 NguoiDung objND = new NguoiDung();
                 QuanLyNguoiDung quanLyNguoiDung = new QuanLyNguoiDung();
-                
+
                 // Lay thong tin tren giao dien
                 objND.setTenDangNhap(txtTenDangNhap.getText());
                 matKhauMD5 = quanLyNguoiDung.maHoaMD5(matKhau);
@@ -276,9 +283,18 @@ public class formThemNguoiDung extends javax.swing.JFrame {
                 objND.setDienThoai(txtDienThoai.getText());
                 objND.setEmail(txtEmail.getText());
                 objND.setDiaChi(txtDiaChi.getText());
-                objND.setQuyen(cmbQuyen.getSelectedItem().toString());
+                //objND.setQuyen(cmbQuyen.getSelectedItem().toString());
 
-                
+                // Khai bao ma khoa
+                String quyen = "";
+                // Lay doi tuong quyen duoc chon
+                QuyenNguoiDung objQuyen = (QuyenNguoiDung) cmbQuyen.getSelectedItem();
+
+                if (objQuyen != null) {
+                    quyen = objQuyen.getQuyen();
+                }
+                objND.setQuyen(quyen);
+
                 boolean ketQuaCapNhap = quanLyNguoiDung.themNguoiDungMoi(objND);
 
                 if (ketQuaCapNhap == true) {
@@ -351,4 +367,44 @@ public class formThemNguoiDung extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtNhapLaiMatKhau;
     private javax.swing.JTextField txtTenDangNhap;
     // End of variables declaration//GEN-END:variables
+
+    private void hienThiDanhSachQuyen() {
+        // Khai bao 1 doi tuong
+        QuanLyQuyenNguoiDung quanLyQuyenNguoiDung = new QuanLyQuyenNguoiDung();
+
+        // Lay danh sach khoa
+        List<QuyenNguoiDung> lstQuyen = quanLyQuyenNguoiDung.layDanhSachQuyen();
+
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+
+        // Duyet danh sach quyen
+        for (QuyenNguoiDung q : lstQuyen) {
+            // Them vao model
+            model.addElement(q);
+        }
+
+        // Hien thi len danh sach chuyen khoa
+        cmbQuyen.setModel(model);
+
+        // Set lai hien thi cho combobox
+        cmbQuyen.setRenderer(new QuyenNguoiDungRenderer());
+    }
+
+    class QuyenNguoiDungRenderer extends BasicComboBoxRenderer {
+
+        @Override
+        public Component getListCellRendererComponent(
+                JList list, Object value, int index,
+                boolean isSelected, boolean cellHasFocus) {
+            super.getListCellRendererComponent(list, value, index,
+                    isSelected, cellHasFocus);
+            if (value != null) {
+                QuyenNguoiDung item = (QuyenNguoiDung) value;
+                setText(item.getQuyen());
+            }
+
+            return this;
+        }
+    }
+
 }
